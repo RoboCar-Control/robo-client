@@ -1,0 +1,107 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 215 25% 15%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 25% 20%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 45% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 196 80% 45%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 216 30% 25%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 216 30% 25%;
+    --muted-foreground: 210 30% 80%;
+
+    --accent: 174 80% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 30% 25%;
+    --input: 217 30% 25%;
+    --ring: 197 80% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 222 45% 10%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 197 80% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 35% 20%;
+    --sidebar-accent-foreground: 210 40% 90%;
+    --sidebar-border: 217 35% 20%;
+    --sidebar-ring: 197 80% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .control-button {
+    @apply flex items-center justify-center h-14 w-14 rounded-full bg-secondary text-secondary-foreground shadow-md hover:bg-primary hover:text-primary-foreground transition-colors;
+  }
+  
+  .control-button-active {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  .status-indicator {
+    @apply h-3 w-3 rounded-full;
+  }
+  
+  .status-online {
+    @apply bg-robotics-success;
+  }
+  
+  .status-offline {
+    @apply bg-robotics-danger;
+  }
+  
+  .status-warning {
+    @apply bg-robotics-warning;
+  }
+  
+  .video-container {
+    @apply relative border-2 border-secondary rounded-lg overflow-hidden bg-robotics-gray-dark;
+  }
+  
+  .detection-box {
+    @apply absolute border-2 border-robotics-teal rounded-md flex items-center justify-center;
+  }
+  
+  .detection-label {
+    @apply absolute -top-6 left-0 bg-robotics-teal text-white text-xs px-2 py-1 rounded;
+  }
+  
+  .dashboard-panel {
+    @apply bg-card rounded-lg shadow-md p-4;
+  }
+  
+  .panel-header {
+    @apply text-lg font-medium mb-4 flex items-center gap-2;
+  }
+  
+  .alert-banner {
+    @apply bg-robotics-danger text-white p-3 rounded-md flex items-center gap-2 mb-4 animate-pulse-warning;
+  }
+}
