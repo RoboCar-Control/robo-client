@@ -10,7 +10,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Bot, Settings, Info } from 'lucide-react';
 import { io } from "socket.io-client";
 
-const socket = io("http://10.193.75.154:5000");
+const socket = io("http://localhost:5000");
 
 const Index = () => {
   const { toast } = useToast();
