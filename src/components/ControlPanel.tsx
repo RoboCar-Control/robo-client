@@ -14,13 +14,16 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { io } from "socket.io-client";
+
+const socket = io("http://10.193.75.154:5000");
 
 type ControlPanelProps = {
   onDirectionChange: (direction: string | null) => void;
   onToggleAutonomous: (enabled: boolean) => void;
   onToggleRecording: (enabled: boolean) => void;
   onSpeedChange: (speed: number) => void;
-  onMoveCar: (direction: string) => void;
+  onMoveCar: (direction: string, speed:number) => void;
   onStopCar:() => void;
   isAutonomous: boolean;
   isRecording: boolean;
@@ -39,9 +42,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   const [activeDirection, setActiveDirection] = useState<string | null>(null);
   const [speed, setSpeed] = useState(50);
 
-  const handleDirectionPress = (direction: string) => {
+  const handleDirectionPress = (direction: string, speed:number) => {
     if (isAutonomous) return;
-
+    onMoveCar(direction, speed)
     setActiveDirection(direction);
     onDirectionChange(direction);
   };
@@ -57,6 +60,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     const newSpeed = value[0];
     setSpeed(newSpeed);
     onSpeedChange(newSpeed);
+    socket.emit("increase_speed", { speed: newSpeed });
   };
 
   return (
@@ -115,11 +119,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               className={`control-button ${
                 activeDirection === "forward" ? "control-button-active" : ""
               }`}
-              onMouseDown={() => handleDirectionPress("forward")}
+              onMouseDown={() => handleDirectionPress("forward", 80)}
               onMouseUp={handleDirectionRelease}
               onMouseLeave={handleDirectionRelease}
-              onTouchStart={() => handleDirectionPress("forward")}
-              onClick={() => onMoveCar("forward")}
+              onTouchStart={() => handleDirectionPress("forward", 80)}
               onTouchEnd={handleDirectionRelease}
               disabled={isAutonomous}
             >
@@ -131,12 +134,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               className={`control-button ${
                 activeDirection === "left" ? "control-button-active" : ""
               }`}
-              onMouseDown={() => handleDirectionPress("left")}
+              onMouseDown={() => handleDirectionPress("left", 50)}
               onMouseUp={handleDirectionRelease}
               onMouseLeave={handleDirectionRelease}
-              onTouchStart={() => handleDirectionPress("left")}
+              onTouchStart={() => handleDirectionPress("left", 50)}
               onTouchEnd={handleDirectionRelease}
-              onClick={() => onMoveCar("left")}
               disabled={isAutonomous}
             >
               <ArrowLeft className="h-6 w-6" />
@@ -147,10 +149,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               className={`control-button ${
                 activeDirection === "stop" ? "control-button-active" : ""
               }`}
-              onMouseDown={() => handleDirectionPress("stop")}
+              onMouseDown={() => handleDirectionPress("stop", 0)}
               onMouseUp={handleDirectionRelease}
               onMouseLeave={handleDirectionRelease}
-              onTouchStart={() => handleDirectionPress("stop")}
+              onTouchStart={() => handleDirectionPress("stop", 0)}
               onTouchEnd={handleDirectionRelease}
               onClick={() => onStopCar()}
               disabled={isAutonomous}
@@ -163,11 +165,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               className={`control-button ${
                 activeDirection === "right" ? "control-button-active" : ""
               }`}
-              onMouseDown={() => handleDirectionPress("right")}
+              onMouseDown={() => handleDirectionPress("right", 80)}
               onMouseUp={handleDirectionRelease}
               onMouseLeave={handleDirectionRelease}
-              onTouchStart={() => handleDirectionPress("right")}
-              onClick={() => onMoveCar("right")}
+              onTouchStart={() => handleDirectionPress("right", 80)}
               onTouchEnd={handleDirectionRelease}
               disabled={isAutonomous}
             >
@@ -179,12 +180,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               className={`control-button ${
                 activeDirection === "backward" ? "control-button-active" : ""
               }`}
-              onMouseDown={() => handleDirectionPress("backward")}
+              onMouseDown={() => handleDirectionPress("backward", 80)}
               onMouseUp={handleDirectionRelease}
               onMouseLeave={handleDirectionRelease}
-              onTouchStart={() => handleDirectionPress("backward")}
+              onTouchStart={() => handleDirectionPress("backward", 80)}
               onTouchEnd={handleDirectionRelease}
-              onClick={() => onMoveCar("backward")}
               disabled={isAutonomous}
             >
               <ArrowDown className="h-6 w-6" />

@@ -10,7 +10,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Bot, Settings, Info } from 'lucide-react';
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("http://10.193.75.154:5000");
 
 const Index = () => {
   const { toast } = useToast();
@@ -24,10 +24,18 @@ const Index = () => {
   useEffect(() => {
     socket.on("connect", () => console.log("Connected to server"));
     socket.on("status", (data) => console.log(data));
+    socket.on("battery_status", (voltage) => console.log(voltage));
+
+    // socket.emit("start_video");
+    // socket.on("video_frame", (data) => {
+    //   const img = document.getElementById("camera-view");
+    //   img.src = "data:image/jpeg;base64," + data.image;
+    // });
+
   }, []);
 
-  const moveCar = (direction: string) => {
-     socket.emit("manual_control", { direction: direction, speed: 50 });
+  const moveCar = (direction: string, speed:number) => {
+     socket.emit("manual_control", { direction: direction, speed: speed });
   };
 
   const stopCar = () => {
@@ -87,6 +95,12 @@ const Index = () => {
   const handleToggleRecording = (enabled: boolean) => {
     setIsRecording(enabled);
     
+    if (enabled) {
+      socket.emit("start_recording");
+    } else {
+      socket.emit("stop_recording");
+    }
+  
     toast({
       title: enabled ? "Recording Started" : "Recording Stopped",
       description: enabled 
