@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Video, Eye } from 'lucide-react';
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 type Detection = {
   id: number;
@@ -21,7 +24,13 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
   // In a real application, these would come from a WebSocket or API
   const [detections, setDetections] = useState<Detection[]>([]);
   const [isLineTracking, setIsLineTracking] = useState(false);
+  const [videoFeed, setVideoFeed] = useState<string>('')
   
+  useEffect(() => {
+      socket.on("video-stream", () => console.log("Connected to server"));
+      socket.on("video_frame", (data) => setVideoFeed(data?.image));
+  }, []);
+
   // Simulate object detections for demonstration
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,25 +75,34 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
           </div>
         )}
       </div>
-      
-      {isCliffDetected && (
+
+      {/* {isCliffDetected && (
         <div className="alert-banner">
           <AlertTriangle className="h-5 w-5" />
           <span>CLIFF DETECTED - Robot stopped for safety</span>
         </div>
-      )}
-      
+      )} */}
+
       <div className="video-container flex-grow relative">
         {/* Placeholder for actual video feed - in a real implementation this would be a video element or canvas */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <p className="text-muted-foreground flex items-center gap-2">
-            <Eye className="h-5 w-5" />
-            <span>Live video stream would appear here</span>
-          </p>
+          {/* src="https://picsum.photos/seed/picsum/500/600" */}
+          {isRecording ? (
+            <img
+              src={videoFeed}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <p className="text-muted-foreground flex items-center gap-2">
+              <Eye className="h-5 w-5" />
+              <span>Live video stream would appear here</span>
+            </p>
+          )}
         </div>
-        
+
         {/* Object detection overlays */}
-        {detections.map((detection) => (
+        {/* {detections.map((detection) => (
           <div
             key={detection.id}
             className="detection-box"
@@ -99,12 +117,12 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
               {detection.label} ({detection.confidence.toFixed(2)})
             </div>
           </div>
-        ))}
-        
+        ))} */}
+
         {/* Line tracking visualization */}
-        {isLineTracking && (
+        {/* {isLineTracking && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-robotics-teal/70 h-1 w-3/4 rounded-full" />
-        )}
+        )} */}
       </div>
     </div>
   );

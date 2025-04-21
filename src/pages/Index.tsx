@@ -20,18 +20,11 @@ const Index = () => {
   const [isCliffDetected, setIsCliffDetected] = useState(false);
   const [robotSpeed, setRobotSpeed] = useState(50);
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected'>('connected');
+  const [voltage, setVoltage] = useState<number>(0)
   
   useEffect(() => {
     socket.on("connect", () => console.log("Connected to server"));
     socket.on("status", (data) => console.log(data));
-    socket.on("battery_status", (voltage) => console.log(voltage));
-
-    // socket.emit("start_video");
-    // socket.on("video_frame", (data) => {
-    //   const img = document.getElementById("camera-view");
-    //   img.src = "data:image/jpeg;base64," + data.image;
-    // });
-
   }, []);
 
   const moveCar = (direction: string, speed:number) => {
@@ -96,11 +89,11 @@ const Index = () => {
     setIsRecording(enabled);
     
     if (enabled) {
-      socket.emit("start_recording");
+      socket.emit("video-stream");
     } else {
       socket.emit("stop_recording");
     }
-  
+
     toast({
       title: enabled ? "Recording Started" : "Recording Stopped",
       description: enabled 
@@ -163,7 +156,7 @@ const Index = () => {
               onStopCar={stopCar}
             />
 
-            <BatteryStatus />
+            <BatteryStatus batteryLevel={voltage}/>
           </div>
         </div>
       </main>

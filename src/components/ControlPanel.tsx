@@ -206,12 +206,12 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             {isRecording ? (
               <>
                 <Pause className="h-5 w-5 mr-2" />
-                <span>Stop Recording</span>
+                <span>Stop Video</span>
               </>
             ) : (
               <>
                 <Play className="h-5 w-5 mr-2" />
-                <span>Start Recording</span>
+                <span>Start Video</span>
               </>
             )}
           </Button>
@@ -222,3 +222,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
 };
 
 export default ControlPanel;
+
+
+//  "tunnel": "lt --port 5173",
+//   "dev:share": "concurrently \"npm run dev\" \"npm run tunnel\"",

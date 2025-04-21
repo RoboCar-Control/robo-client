@@ -4,28 +4,31 @@ import { Battery, BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, Batte
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 
-const BatteryStatus: React.FC = () => {
+type BatteryProps = {
+  batteryLevel: number;
+}
+const BatteryStatus: React.FC<BatteryProps> = ({batteryLevel}) => {
   // In a real implementation, this would be fetched from the robot
-  const [batteryLevel, setBatteryLevel] = useState(85);
+  //const [batteryLevel, setBatteryLevel] = useState(85);
   const [isCharging, setIsCharging] = useState(false);
   
   // Simulate battery drain
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBatteryLevel(prev => {
-        // Random battery fluctuation
-        const change = Math.random() > 0.7 ? -1 : (Math.random() > 0.9 ? 1 : 0);
-        return Math.max(0, Math.min(100, prev + change));
-      });
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setBatteryLevel(prev => {
+  //       // Random battery fluctuation
+  //       const change = Math.random() > 0.7 ? -1 : (Math.random() > 0.9 ? 1 : 0);
+  //       return Math.max(0, Math.min(100, prev + change));
+  //     });
       
-      // Randomly toggle charging state
-      if (Math.random() > 0.95) {
-        setIsCharging(prev => !prev);
-      }
-    }, 5000);
+  //     // Randomly toggle charging state
+  //     if (Math.random() > 0.95) {
+  //       setIsCharging(prev => !prev);
+  //     }
+  //   }, 5000);
     
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
   
   const getBatteryIcon = () => {
     if (isCharging) return <BatteryCharging className="h-5 w-5 text-robotics-blue" />;
