@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { io } from "socket.io-client";
 
-const socket = io("http://l92.168.137.183:5000");
+const socket = io("http://localhost:5000");
 
 type ControlPanelProps = {
   onDirectionChange: (direction: string | null) => void;
