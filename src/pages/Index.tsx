@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Bot, Settings, Info } from 'lucide-react';
 import { io } from "socket.io-client";
+import HeadControl from '@/components/HeadControl';
 
 const socket = io("http://localhost:5000");
 
@@ -23,6 +24,7 @@ const Index = () => {
   const [voltage, setVoltage] = useState<number>(0)
   const [wifi, setWifi] = useState<number>(85)
   const [cpuUsage, setCpuUsage] = useState<number>(0)
+  const [activeHeadDirection, setActiveHeadDirection] = useState<string | null>('')
 
 
   useEffect(() => {
@@ -41,6 +43,10 @@ const Index = () => {
 
   const moveCar = (direction: string, speed:number) => {
      socket.emit("manual_control", { direction: direction, speed: speed });
+  };
+
+  const moveCarHead = (direction: string) => {
+    socket.emit("head_control", { direction: direction });
   };
 
   const stopCar = () => {
@@ -82,7 +88,7 @@ const Index = () => {
   const handleToggleAutonomous = (enabled: boolean) => {
     setIsAutonomous(enabled);
     console.log(isAutonomous)
-    if (!isAutonomous) {
+    if (enabled) {
       socket.emit("start_autonomous");
       setActiveDirection(null);
     } else {
@@ -146,8 +152,13 @@ const Index = () => {
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
           <div className="lg:col-span-3 flex flex-col gap-6">
-            <div className="flex-grow">
+            <div className="flex-grow flex flex-col gap-6 lg:col-span-3">
               <EventLog />
+
+              <HeadControl
+                onHeadDirectionChange={setActiveHeadDirection}
+                moveCarHead={moveCarHead}
+              />
             </div>
           </div>
           {/* Left Column - Video Feed */}
