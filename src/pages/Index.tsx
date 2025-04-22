@@ -19,12 +19,24 @@ const Index = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isCliffDetected, setIsCliffDetected] = useState(false);
   const [robotSpeed, setRobotSpeed] = useState(50);
-  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected'>('connected');
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected'>('disconnected');
   const [voltage, setVoltage] = useState<number>(0)
-  
+  const [wifi, setWifi] = useState<number>(85)
+  const [cpuUsage, setCpuUsage] = useState<number>(0)
+
+
   useEffect(() => {
-    socket.on("connect", () => console.log("Connected to server"));
-    socket.on("status", (data) =>  console.log(data));
+    socket.on("connect", () => {
+      setConnectionStatus('connected')
+      console.log("Connected to server")
+    });
+    socket.on("status", (data) => {
+      console.log(data);
+      setVoltage(data?.voltage);
+      setWifi(data?.wifi ? 80 : 0)
+      setCpuUsage(data?.cpu)
+    } );
+    setVoltage(3200);
   }, []);
 
   const moveCar = (direction: string, speed:number) => {
@@ -113,16 +125,20 @@ const Index = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <StatusIndicators connectionStatus={connectionStatus} />
+            <StatusIndicators
+              connectionStatus={connectionStatus}
+              wifi={wifi}
+              cpu={cpuUsage}
+            />
 
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <Button variant="ghost" size="icon">
                 <Info className="h-5 w-5" />
               </Button>
               <Button variant="ghost" size="icon">
                 <Settings className="h-5 w-5" />
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </header>
@@ -156,7 +172,7 @@ const Index = () => {
               onStopCar={stopCar}
             />
 
-            <BatteryStatus batteryLevel={voltage}/>
+            <BatteryStatus batteryLevel={voltage} />
           </div>
         </div>
       </main>

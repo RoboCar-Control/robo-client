@@ -4,20 +4,24 @@ import { Signal, Wifi, Globe, Cpu } from 'lucide-react';
 
 type StatusIndicatorsProps = {
   connectionStatus: 'connected' | 'connecting' | 'disconnected';
+  cpu: number;
+  wifi: number;
 };
 
-const StatusIndicators: React.FC<StatusIndicatorsProps> = ({ connectionStatus }) => {
+const StatusIndicators: React.FC<StatusIndicatorsProps> = ({ connectionStatus, wifi, cpu }) => {
   const [cpuUsage, setCpuUsage] = useState(30);
   const [wifiStrength, setWifiStrength] = useState(80);
   
   // Simulate CPU and WiFi fluctuations
   useEffect(() => {
+    setCpuUsage(cpu)
     const interval = setInterval(() => {
       setCpuUsage(prev => {
         const change = Math.random() * 15 - 5;
         return Math.max(10, Math.min(95, prev + change));
       });
       
+      setWifiStrength(wifi);
       setWifiStrength(prev => {
         const change = Math.random() * 10 - 4;
         return Math.max(20, Math.min(100, prev + change));
