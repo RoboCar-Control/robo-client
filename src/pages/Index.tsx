@@ -36,7 +36,7 @@ const Index = () => {
       setWifi(data?.wifi ? 80 : 0)
       setCpuUsage(data?.cpu)
     } );
-    setVoltage(3200);
+
   }, []);
 
   const moveCar = (direction: string, speed:number) => {
@@ -81,19 +81,18 @@ const Index = () => {
   // Handle mode changes
   const handleToggleAutonomous = (enabled: boolean) => {
     setIsAutonomous(enabled);
-    
-
-    toast({
-      title: enabled ? "Autonomous Mode Enabled" : "Manual Control Enabled",
-      description: enabled ? "Robot is now driving itself" : "You have full control of the robot",
-    });
-    
-    if (enabled) {
+    console.log(isAutonomous)
+    if (!isAutonomous) {
       socket.emit("start_autonomous");
       setActiveDirection(null);
     } else {
       socket.emit("stop_autonomous");
     }
+
+    toast({
+      title: enabled ? "Autonomous Mode Enabled" : "Manual Control Enabled",
+      description: enabled ? "Robot is now driving itself" : "You have full control of the robot",
+    });
   };
   
   // Handle recording toggle

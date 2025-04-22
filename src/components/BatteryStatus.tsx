@@ -12,6 +12,8 @@ const BatteryStatus: React.FC<BatteryProps> = ({batteryLevel}) => {
   
   useEffect(() => {
     const initialPercent = Math.round((batteryLevel / 4095) * 100);
+    console.log(batteryLevel)
+    console.log(initialPercent)
     setVoltagePercent(initialPercent);
 
     const interval = setInterval(() => {
