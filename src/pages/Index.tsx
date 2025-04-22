@@ -24,7 +24,7 @@ const Index = () => {
   
   useEffect(() => {
     socket.on("connect", () => console.log("Connected to server"));
-    socket.on("status", (data) => console.log(data));
+    socket.on("status", (data) =>  console.log(data));
   }, []);
 
   const moveCar = (direction: string, speed:number) => {

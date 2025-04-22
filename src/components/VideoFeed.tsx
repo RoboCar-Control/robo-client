@@ -30,10 +30,10 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
       socket.on("video-stream", () => console.log("Connected to server"));
       socket.on("video_frame", (data)=> {
         console.log(data)
-        setVideoFeed('data:image/jpg;base64,/9j/' + data?.image)
+        setVideoFeed('data:image/jpeg;base64,' + data?.image)
       });
   }, []);
-
+  console.log(videoFeed)
   // Simulate object detections for demonstration
   useEffect(() => {
     const interval = setInterval(() => {
