@@ -86,10 +86,8 @@ const Index = () => {
   const handleToggleAutonomous = (enabled: boolean) => {
     setIsAutonomous(enabled);
     console.log(isAutonomous)
-    if (enabled) {
-      socket.emit("stop_autonomous");
-      setActiveDirection(null);
-    }
+    socket.emit("stop_autonomous", { message: "Stop car" });
+    setActiveDirection(null);
   }
 
     const handleToggleManual = (enabled: boolean) => {
