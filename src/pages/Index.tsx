@@ -106,7 +106,7 @@ const Index = () => {
     if (enabled) {
       socket.emit("video-stream");
     } else {
-      socket.emit("stop_stream", {"state": true});
+      socket.emit("stop_stream");
     }
 
     toast({
