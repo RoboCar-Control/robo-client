@@ -5,9 +5,8 @@ import ControlPanel from '@/components/ControlPanel';
 import BatteryStatus from '@/components/BatteryStatus';
 import EventLog from '@/components/EventLog';
 import StatusIndicators from '@/components/StatusIndicators';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Bot, Settings, Info } from 'lucide-react';
+import { Bot } from 'lucide-react';
 import { io } from "socket.io-client";
 import HeadControl from '@/components/HeadControl';
 
@@ -57,7 +56,6 @@ const Index = () => {
   useEffect(() => {
     if (activeDirection) {
       console.log(`Sending command: ${activeDirection} at speed ${robotSpeed}%`);
-      // In a real app, you would send this to your backend/WebSocket
     }
   }, [activeDirection, robotSpeed]);
   
@@ -108,7 +106,7 @@ const Index = () => {
     if (enabled) {
       socket.emit("video-stream");
     } else {
-      socket.emit("stop_recording");
+      socket.emit("stop_stream", {"state": true});
     }
 
     toast({
