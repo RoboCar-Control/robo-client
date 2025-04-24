@@ -17,7 +17,7 @@ import { Slider } from '@/components/ui/slider';
 import { io } from "socket.io-client";
 import { Enabled } from '@tanstack/react-query';
 
-const socket = io("http://localhost:5000");
+const socket = io("http://192.168.137.183:5000");
 
 type ControlPanelProps = {
   onDirectionChange: (direction: string | null) => void;

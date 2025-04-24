@@ -10,7 +10,7 @@ import { Bot } from 'lucide-react';
 import { io } from "socket.io-client";
 import HeadControl from '@/components/HeadControl';
 
-const socket = io("http://localhost:5000");
+const socket = io("http://192.168.137.183:5000");
 
 const Index = () => {
   const { toast } = useToast();
