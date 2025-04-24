@@ -67,7 +67,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
   }, []);
   
   return (
-    <div className="dashboard-panel h-full flex flex-col">
+    <div className="dashboard-panel h-full min-h-96 flex flex-col">
       <div className="panel-header">
         <Video className="h-5 w-5" />
         <span>Live Video Feed</span>

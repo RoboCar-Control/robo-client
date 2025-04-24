@@ -60,27 +60,27 @@ const Index = () => {
   }, [activeDirection, robotSpeed]);
   
   // Simulate cliff detection randomly
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const shouldDetectCliff = Math.random() > 0.9;
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const shouldDetectCliff = Math.random() > 0.9;
       
-      if (shouldDetectCliff && !isCliffDetected) {
-        setIsCliffDetected(true);
-        toast({
-          title: "Cliff Detected!",
-          description: "Robot has stopped for safety",
-          variant: "destructive",
-        });
+  //     if (shouldDetectCliff && !isCliffDetected) {
+  //       setIsCliffDetected(true);
+  //       toast({
+  //         title: "Cliff Detected!",
+  //         description: "Robot has stopped for safety",
+  //         variant: "destructive",
+  //       });
         
-        // Auto-clear after a few seconds
-        setTimeout(() => {
-          setIsCliffDetected(false);
-        }, 5000);
-      }
-    }, 10000);
+  //       // Auto-clear after a few seconds
+  //       setTimeout(() => {
+  //         setIsCliffDetected(false);
+  //       }, 5000);
+  //     }
+  //   }, 10000);
     
-    return () => clearInterval(interval);
-  }, [isCliffDetected, toast]);
+  //   return () => clearInterval(interval);
+  // }, [isCliffDetected, toast]);
   
   // Handle mode changes
   const handleToggleAutonomous = (enabled: boolean) => {
