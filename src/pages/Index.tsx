@@ -87,11 +87,18 @@ const Index = () => {
     setIsAutonomous(enabled);
     console.log(isAutonomous)
     if (enabled) {
-      socket.emit("start_autonomous");
-      setActiveDirection(null);
-    } else {
       socket.emit("stop_autonomous");
+      setActiveDirection(null);
     }
+  }
+
+    const handleToggleManual = (enabled: boolean) => {
+      setIsAutonomous(enabled);
+      console.log(isAutonomous)
+      if (enabled) {
+        socket.emit("start_autonomous");
+        setActiveDirection(null);
+      }
 
     toast({
       title: enabled ? "Autonomous Mode Enabled" : "Manual Control Enabled",
@@ -172,6 +179,7 @@ const Index = () => {
             <ControlPanel
               onDirectionChange={setActiveDirection}
               onToggleAutonomous={handleToggleAutonomous}
+              onToggleManual={handleToggleManual}
               onToggleRecording={handleToggleRecording}
               onSpeedChange={setRobotSpeed}
               isAutonomous={isAutonomous}

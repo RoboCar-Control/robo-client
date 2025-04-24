@@ -15,16 +15,18 @@ import {
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { io } from "socket.io-client";
+import { Enabled } from '@tanstack/react-query';
 
 const socket = io("http://localhost:5000");
 
 type ControlPanelProps = {
   onDirectionChange: (direction: string | null) => void;
   onToggleAutonomous: (enabled: boolean) => void;
+  onToggleManual: (Enabled:boolean) => void;
   onToggleRecording: (enabled: boolean) => void;
   onSpeedChange: (speed: number) => void;
-  onMoveCar: (direction: string, speed:number) => void;
-  onStopCar:() => void;
+  onMoveCar: (direction: string, speed: number) => void;
+  onStopCar: () => void;
   isAutonomous: boolean;
   isRecording: boolean;
 };
@@ -32,6 +34,7 @@ type ControlPanelProps = {
 const ControlPanel: React.FC<ControlPanelProps> = ({
   onDirectionChange,
   onToggleAutonomous,
+  onToggleManual,
   onToggleRecording,
   onSpeedChange,
   isAutonomous,
@@ -74,23 +77,25 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
         {/* Mode Toggle */}
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Control Mode:</span>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2"
-            onClick={() => onToggleAutonomous(!isAutonomous)}
-          >
-            {isAutonomous ? (
-              <>
-                <ToggleRight className="h-5 w-5 text-robotics-success" />
-                <span>Autonomous</span>
-              </>
-            ) : (
-              <>
-                <ToggleLeft className="h-5 w-5" />
-                <span>Manual</span>
-              </>
-            )}
-          </Button>
+          {isAutonomous ? (
+            <Button
+              variant="outline"
+              className="flex items-center gap-2"
+              onClick={() => onToggleAutonomous(!isAutonomous)}
+            >
+              <ToggleRight className="h-5 w-5 text-robotics-success" />
+              <span>Autonomous</span>
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="flex items-center gap-2"
+              onClick={() => onToggleManual(!isAutonomous)}
+            >
+              <ToggleLeft className="h-5 w-5" />
+              <span>Manual</span>
+            </Button>
+          )}
         </div>
 
         {/* Speed Control */}
