@@ -188,6 +188,7 @@ const Index = () => {
             <VideoFeed
               isCliffDetected={isCliffDetected}
               isRecording={isRecording}
+              setIsRecording={setIsRecording}
             />
           </div>
 

@@ -18,36 +18,43 @@ type Detection = {
 type VideoFeedProps = {
   isCliffDetected: boolean;
   isRecording: boolean;
+  setIsRecording: () => void;
 };
 
-const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) => {
+const VideoFeed: React.FC<VideoFeedProps> = ({
+  isCliffDetected,
+  isRecording,
+  setIsRecording,
+}) => {
   // In a real application, these would come from a WebSocket or API
   const [detections, setDetections] = useState<Detection[]>([]);
   const [isLineTracking, setIsLineTracking] = useState(false);
-  const [videoFeed, setVideoFeed] = useState<string>('')
-  
+  const [videoFeed, setVideoFeed] = useState<string>("");
+  const [colorFeed, setColorFeed] = useState<string>("");
+
   useEffect(() => {
-      socket.on("video-stream", () => console.log("Connected to server"));
-      socket.on("video_frame", (data)=> {
-        setVideoFeed('data:image/jpeg;base64,' + data?.image)
-      });
+    socket.on("video-stream", () => console.log("Connected to server"));
+    socket.on("video_frame", (data) => {
+      setVideoFeed("data:image/jpeg;base64," + data?.image);
+    });
   }, []);
 
   useEffect(() => {
-     socket.on("color_frame", (data) => {
-       setVideoFeed("data:image/jpeg;base64," + data?.image);
-     });
-  }, [])
-  console.log(videoFeed)
+    socket.on("color_frame", (data) => {
+      console.log(data?.image);
+      setColorFeed("data:image/jpeg;base64," + data?.image);
+    });
+  }, []);
+  //console.log(videoFeed)
   // Simulate object detections for demonstration
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() > 0.7) {
         const newDetections: Detection[] = [];
         const numDetections = Math.floor(Math.random() * 3) + 1;
-        
+
         for (let i = 0; i < numDetections; i++) {
-          const labels = ['Person', 'Chair', 'Table', 'Dog', 'Cat', 'Car'];
+          const labels = ["Person", "Chair", "Table", "Dog", "Cat", "Car"];
           newDetections.push({
             id: i,
             label: labels[Math.floor(Math.random() * labels.length)],
@@ -58,19 +65,19 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
             height: Math.random() * 30 + 10,
           });
         }
-        
+
         setDetections(newDetections);
       } else {
         setDetections([]);
       }
-      
+
       // Randomly toggle line tracking
       setIsLineTracking(Math.random() > 0.5);
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <div className="dashboard-panel h-full min-h-96 flex flex-col">
       <div className="panel-header">
@@ -97,7 +104,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
           {/* src="https://picsum.photos/seed/picsum/500/600" */}
           {isRecording ? (
             <img
-              src={videoFeed}
+              src={colorFeed}
               alt=""
               className="w-full h-full object-cover"
             />
