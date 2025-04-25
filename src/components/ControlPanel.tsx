@@ -15,7 +15,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { io } from "socket.io-client";
-import { Enabled } from '@tanstack/react-query';
 
 const socket = io("http://192.168.137.183:5000");
 
@@ -211,12 +210,12 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             {isRecording ? (
               <>
                 <Pause className="h-5 w-5 mr-2" />
-                <span>Stop Video</span>
+                <span>Stop Detection</span>
               </>
             ) : (
               <>
                 <Play className="h-5 w-5 mr-2" />
-                <span>Start Video</span>
+                <span>Start Object Detection</span>
               </>
             )}
           </Button>

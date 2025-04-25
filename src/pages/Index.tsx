@@ -23,7 +23,8 @@ const Index = () => {
   const [voltage, setVoltage] = useState<number>(0)
   const [wifi, setWifi] = useState<number>(85)
   const [cpuUsage, setCpuUsage] = useState<number>(0)
-  const [activeHeadDirection, setActiveHeadDirection] = useState<string | null>('')
+  const [isLineFollow, setIsLineFollow] = useState<boolean>(false)
+  const [activeHeadDirection, setActiveHeadDirection] = useState<string | "">();
 
 
   useEffect(() => {
@@ -50,6 +51,16 @@ const Index = () => {
 
   const stopCar = () => {
     socket.emit("stop");
+  }
+
+  const on_line_follow = ()=> {
+    setIsLineFollow(!isLineFollow)
+    socket.emit("start_line_following");
+  }
+
+  const on_stop_line_follow = () => {
+      setIsLineFollow(!isLineFollow);
+      socket.emit("stop_line_following");
   }
 
   // Simulate sending commands to the robot
@@ -156,7 +167,11 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
           <div className="lg:col-span-3 flex flex-col gap-6">
             <div className="flex-grow flex flex-col gap-6 lg:col-span-3">
-              <EventLog />
+              <EventLog
+                onFollowLine={on_line_follow}
+                onStopFollowLine={on_stop_line_follow}
+                isLineFollow={isLineFollow}
+              />
 
               <HeadControl
                 onHeadDirectionChange={setActiveHeadDirection}
