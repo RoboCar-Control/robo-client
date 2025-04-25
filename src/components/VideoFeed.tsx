@@ -30,6 +30,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
       socket.on("video-stream", () => console.log("Connected to server"));
       socket.on("video_frame", (data)=> {
         console.log(data)
+        console.log(data.image);
         setVideoFeed('data:image/jpeg;base64,' + data?.image)
       });
   }, []);
