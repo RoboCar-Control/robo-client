@@ -18,7 +18,7 @@ type Detection = {
 type VideoFeedProps = {
   isCliffDetected: boolean;
   isRecording: boolean;
-  setIsRecording: () => void;
+  setIsRecording: (data) => void;
 };
 
 const VideoFeed: React.FC<VideoFeedProps> = ({
@@ -42,6 +42,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
   useEffect(() => {
     socket.on("color_frame", (data) => {
       console.log(data?.image);
+      setIsRecording(!isRecording)
       setColorFeed("data:image/jpeg;base64," + data?.image);
     });
   }, []);
