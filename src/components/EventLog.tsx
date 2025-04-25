@@ -15,9 +15,15 @@ type EventProps = {
   onFollowLine: () => void;
   onStopFollowLine: () => void;
   isLineFollow: boolean;
+  onDetectColor: () => void;
 };
 
-const EventLog: React.FC<EventProps> = ({ onFollowLine, onStopFollowLine, isLineFollow, }) => {
+const EventLog: React.FC<EventProps> = ({
+  onFollowLine,
+  onStopFollowLine,
+  isLineFollow,
+  onDetectColor,
+}) => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -162,7 +168,17 @@ const EventLog: React.FC<EventProps> = ({ onFollowLine, onStopFollowLine, isLine
         </Button>
       )}
 
-      <div className="mt-10 flex justify-between">
+      <Button
+        variant="outline"
+        className={`w-full bg-red-500 mt-5`}
+        onClick={() => onDetectColor()}
+      >
+        <>
+          <Play className="h-5 w-5 mr-2" />
+          <span>Detect Color</span>
+        </>
+      </Button>
+      {/* <div className="mt-10 flex justify-between">
         <Button className="mt-2 p-5 flex justify-center bg-robotics-danger w-[70px] h-[70px] rounded-full">
           Red
         </Button>
@@ -172,7 +188,7 @@ const EventLog: React.FC<EventProps> = ({ onFollowLine, onStopFollowLine, isLine
         <Button className="mt-2 p-5 flex justify-center bg-green-500 w-[70px] h-[70px] rounded-full">
           Green
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

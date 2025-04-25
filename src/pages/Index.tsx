@@ -63,6 +63,9 @@ const Index = () => {
       socket.emit("stop_line_following");
   }
 
+  const onDetectColor = () => {
+    socket.emit("detect-color");
+  }
   // Simulate sending commands to the robot
   useEffect(() => {
     if (activeDirection) {
@@ -171,6 +174,7 @@ const Index = () => {
                 onFollowLine={on_line_follow}
                 onStopFollowLine={on_stop_line_follow}
                 isLineFollow={isLineFollow}
+                onDetectColor={onDetectColor}
               />
 
               <HeadControl

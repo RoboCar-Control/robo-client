@@ -32,6 +32,12 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ isCliffDetected, isRecording }) =
         setVideoFeed('data:image/jpeg;base64,' + data?.image)
       });
   }, []);
+
+  useEffect(() => {
+     socket.on("color_frame", (data) => {
+       setVideoFeed("data:image/jpeg;base64," + data?.image);
+     });
+  }, [])
   console.log(videoFeed)
   // Simulate object detections for demonstration
   useEffect(() => {
