@@ -30,7 +30,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
   const [detections, setDetections] = useState<Detection[]>([]);
   const [isLineTracking, setIsLineTracking] = useState(false);
   const [videoFeed, setVideoFeed] = useState<string>("");
-  const [colorFeed, setColorFeed] = useState<string>("");
+
 
   useEffect(() => {
     socket.on("video-stream", () => console.log("Connected to server"));
@@ -97,7 +97,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
           {/* src="https://picsum.photos/seed/picsum/500/600" */}
           {isRecording ? (
             <img
-              src={colorFeed}
+              src={videoFeed}
               alt=""
               className="w-full h-full object-cover"
             />
