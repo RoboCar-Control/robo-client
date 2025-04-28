@@ -170,6 +170,19 @@ const EventLog: React.FC<EventProps> = ({
 
       <div className="mt-10 flex justify-between">
         <Button
+          variant="outline"
+          className={`mt-2 p-5 flex justify-center text-black bg-white w-[70px] h-[70px] rounded-full`}
+          onClick={() => onDetectColor("#ffffff")}
+        >
+          White
+        </Button>
+        <Button
+          className="mt-2 p-5 flex justify-center bg-black w-[70px] h-[70px] rounded-full"
+          onClick={() => onDetectColor("#000000")}
+        >
+          Black
+        </Button>
+        <Button
           className="mt-2 p-5 flex justify-center bg-robotics-danger w-[70px] h-[70px] rounded-full"
           onClick={() => onDetectColor("#804F50")}
         >
@@ -181,14 +194,8 @@ const EventLog: React.FC<EventProps> = ({
         >
           Blue
         </Button>
-        <Button
-          className="mt-2 p-5 flex justify-center bg-green-500 w-[70px] h-[70px] rounded-full"
-          onClick={() => onDetectColor("#74BB53")}
-        >
-          Green
-        </Button>
       </div>
-      <Button
+      {/* <Button
         variant="outline"
         className={`w-full bg-white-500 mt-5`}
         onClick={() => onDetectColor("#ffffff")}
@@ -197,7 +204,7 @@ const EventLog: React.FC<EventProps> = ({
           <Play className="h-5 w-5 mr-2" />
           <span>Detect White</span>
         </>
-      </Button>
+      </Button> */}
     </div>
   );
 };
