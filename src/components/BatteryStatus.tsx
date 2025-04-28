@@ -12,8 +12,6 @@ const BatteryStatus: React.FC<BatteryProps> = ({batteryLevel}) => {
   
   useEffect(() => {
     const initialPercent = Math.round((batteryLevel / 4095) * 100);
-    console.log(batteryLevel)
-    console.log(initialPercent)
     setVoltagePercent(initialPercent);
 
     const interval = setInterval(() => {
@@ -27,8 +25,6 @@ const BatteryStatus: React.FC<BatteryProps> = ({batteryLevel}) => {
     return () => clearInterval(interval);
   }, []);
 
-  console.log(batteryLevel)
-  console.log(voltagePercent);
   const getBatteryIcon = () => {
     // if (isCharging) return <BatteryCharging className="h-5 w-5 text-robotics-blue" />;
     if (voltagePercent > 75) return <BatteryFull className="h-5 w-5 text-robotics-success" />;

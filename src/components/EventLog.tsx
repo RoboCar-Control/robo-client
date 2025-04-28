@@ -15,7 +15,7 @@ type EventProps = {
   onFollowLine: () => void;
   onStopFollowLine: () => void;
   isLineFollow: boolean;
-  onDetectColor: () => void;
+  onDetectColor: (color:string) => void;
 };
 
 const EventLog: React.FC<EventProps> = ({
@@ -171,24 +171,33 @@ const EventLog: React.FC<EventProps> = ({
       <Button
         variant="outline"
         className={`w-full bg-red-500 mt-5`}
-        onClick={() => onDetectColor()}
+        onClick={() => onDetectColor("#ef4444")}
       >
         <>
           <Play className="h-5 w-5 mr-2" />
           <span>Detect Color</span>
         </>
       </Button>
-      {/* <div className="mt-10 flex justify-between">
-        <Button className="mt-2 p-5 flex justify-center bg-robotics-danger w-[70px] h-[70px] rounded-full">
+      <div className="mt-10 flex justify-between">
+        <Button
+          className="mt-2 p-5 flex justify-center bg-robotics-danger w-[70px] h-[70px] rounded-full"
+          onClick={() => onDetectColor("#ef4444")}
+        >
           Red
         </Button>
-        <Button className="mt-2 p-5 flex justify-center bg-blue-700 w-[70px] h-[70px] rounded-full">
+        <Button
+          className="mt-2 p-5 flex justify-center bg-blue-700 w-[70px] h-[70px] rounded-full"
+          onClick={() => onDetectColor("#1d4ed8")}
+        >
           Blue
         </Button>
-        <Button className="mt-2 p-5 flex justify-center bg-green-500 w-[70px] h-[70px] rounded-full">
+        <Button
+          className="mt-2 p-5 flex justify-center bg-green-500 w-[70px] h-[70px] rounded-full"
+          onClick={() => onDetectColor("#22c55e")}
+        >
           Green
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 };

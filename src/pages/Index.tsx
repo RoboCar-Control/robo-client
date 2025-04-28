@@ -63,8 +63,9 @@ const Index = () => {
       socket.emit("stop_line_following");
   }
 
-  const onDetectColor = () => {
-    socket.emit("detect-color");
+  const onDetectColor = (color: string) => {
+    console.log(color)
+    socket.emit("detect-color", {color: color});
   }
   // Simulate sending commands to the robot
   useEffect(() => {
