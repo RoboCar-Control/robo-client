@@ -33,16 +33,16 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
   const [colorFeed, setColorFeed] = useState<string>("");
 
   useEffect(() => {
-    if (isRecording) {
+    // if (isRecording) {
     socket.on("video-stream", () => console.log("Connected to server"));
     socket.on("video_frame", (data) => {
       setVideoFeed("data:image/jpeg;base64," + data?.image);
     });
-  } else {
-      socket.on("color_frame", (data) => {
-        setColorFeed("data:image/jpeg;base64," + data?.image);
-      });
-    }
+  // } else {
+  //     socket.on("color_frame", (data) => {
+  //       setColorFeed("data:image/jpeg;base64," + data?.image);
+  //     });
+  //   }
   }, []);
 
   //console.log(videoFeed)
