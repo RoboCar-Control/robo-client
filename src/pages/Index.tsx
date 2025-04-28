@@ -121,11 +121,13 @@ const Index = () => {
   
   // Handle recording toggle
   const handleToggleRecording = (enabled: boolean) => {
-    setIsRecording(enabled);
-    
+    console.log(enabled)
+
     if (enabled) {
+      setIsRecording(enabled);
       socket.emit("video-stream");
     } else {
+      setIsRecording(!enabled)
       socket.emit("stop_stream");
     }
 
