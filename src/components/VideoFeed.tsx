@@ -34,14 +34,14 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
 
   useEffect(() => {
     // if (isRecording) {
-    socket.on("video-stream", () => console.log("Connected to server"));
-    socket.on("video_frame", (data) => {
-      setVideoFeed("data:image/jpeg;base64," + data?.image);
-    });
+    // socket.on("video-stream", () => console.log("Connected to server"));
+    // socket.on("video_frame", (data) => {
+    //   setVideoFeed("data:image/jpeg;base64," + data?.image);
+    // });
   // } else {
-  //     socket.on("color_frame", (data) => {
-  //       setColorFeed("data:image/jpeg;base64," + data?.image);
-  //     });
+      socket.on("color_frame", (data) => {
+        setColorFeed("data:image/jpeg;base64," + data?.image);
+      });
   //   }
   }, []);
 
@@ -104,7 +104,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
           {/* src="https://picsum.photos/seed/picsum/500/600" */}
           {isRecording ? (
             <img
-              src={videoFeed}
+              src={colorFeed}
               alt=""
               className="w-full h-full object-cover"
             />
