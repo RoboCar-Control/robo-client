@@ -40,8 +40,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
     });
   } else {
       socket.on("color_frame", (data) => {
-        setIsRecording(!isRecording);
-        setVideoFeed("data:image/jpeg;base64," + data?.image);
+        setColorFeed("data:image/jpeg;base64," + data?.image);
       });
     }
   }, []);
@@ -105,7 +104,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
           {/* src="https://picsum.photos/seed/picsum/500/600" */}
           {isRecording ? (
             <img
-              src={colorFeed}
+              src={videoFeed}
               alt=""
               className="w-full h-full object-cover"
             />
