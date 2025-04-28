@@ -15,7 +15,8 @@ type EventProps = {
   onFollowLine: () => void;
   onStopFollowLine: () => void;
   isLineFollow: boolean;
-  onDetectColor: (color:string) => void;
+  onDetectColor: (color: string) => void;
+  onStopDetectColor: () => void
 };
 
 const EventLog: React.FC<EventProps> = ({
@@ -23,6 +24,7 @@ const EventLog: React.FC<EventProps> = ({
   onStopFollowLine,
   isLineFollow,
   onDetectColor,
+  onStopDetectColor
 }) => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -195,16 +197,13 @@ const EventLog: React.FC<EventProps> = ({
           Blue
         </Button>
       </div>
-      {/* <Button
+      <Button
         variant="outline"
         className={`w-full bg-white-500 mt-5`}
-        onClick={() => onDetectColor("#ffffff")}
+        onClick={() => onStopDetectColor()}
       >
-        <>
-          <Play className="h-5 w-5 mr-2" />
-          <span>Detect White</span>
-        </>
-      </Button> */}
+        <span>Stop Detecting</span>
+      </Button>
     </div>
   );
 };

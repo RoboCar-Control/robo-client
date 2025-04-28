@@ -116,24 +116,6 @@ const VideoFeed: React.FC<VideoFeedProps> = ({
           )}
         </div>
 
-        {/* Object detection overlays */}
-        {/* {detections.map((detection) => (
-          <div
-            key={detection.id}
-            className="detection-box"
-            style={{
-              left: `${detection.x}%`,
-              top: `${detection.y}%`,
-              width: `${detection.width}%`,
-              height: `${detection.height}%`,
-            }}
-          >
-            <div className="detection-label">
-              {detection.label} ({detection.confidence.toFixed(2)})
-            </div>
-          </div>
-        ))} */}
-
         {/* Line tracking visualization */}
         {/* {isLineTracking && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-robotics-teal/70 h-1 w-3/4 rounded-full" />

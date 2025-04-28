@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Bot } from 'lucide-react';
 import { io } from "socket.io-client";
 import HeadControl from '@/components/HeadControl';
+import ColorFeed from '@/components/ColorFeed';
 
 const socket = io("http://192.168.137.183:5000");
 
@@ -25,6 +26,7 @@ const Index = () => {
   const [cpuUsage, setCpuUsage] = useState<number>(0)
   const [isLineFollow, setIsLineFollow] = useState<boolean>(false)
   const [activeHeadDirection, setActiveHeadDirection] = useState<string | "">();
+  const [isColorDetection, setIsColorDetection] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -64,40 +66,22 @@ const Index = () => {
   }
 
   const onDetectColor = (color: string) => {
-    console.log(color)
-    setIsRecording(true);
+    setIsColorDetection(true)
     socket.emit("detect-color", {color: color});
   }
+
+  const onStopDetectColor = () => {
+    setIsColorDetection(false)
+    socket.emit("close_color_detect");
+  }
+
   // Simulate sending commands to the robot
   useEffect(() => {
     if (activeDirection) {
       console.log(`Sending command: ${activeDirection} at speed ${robotSpeed}%`);
     }
   }, [activeDirection, robotSpeed]);
-  
-  // Simulate cliff detection randomly
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const shouldDetectCliff = Math.random() > 0.9;
-      
-  //     if (shouldDetectCliff && !isCliffDetected) {
-  //       setIsCliffDetected(true);
-  //       toast({
-  //         title: "Cliff Detected!",
-  //         description: "Robot has stopped for safety",
-  //         variant: "destructive",
-  //       });
-        
-  //       // Auto-clear after a few seconds
-  //       setTimeout(() => {
-  //         setIsCliffDetected(false);
-  //       }, 5000);
-  //     }
-  //   }, 10000);
-    
-  //   return () => clearInterval(interval);
-  // }, [isCliffDetected, toast]);
-  
+
   // Handle mode changes
   const handleToggleAutonomous = (enabled: boolean) => {
     setIsAutonomous(enabled);
@@ -156,15 +140,6 @@ const Index = () => {
               wifi={wifi}
               cpu={cpuUsage}
             />
-
-            {/* <div className="flex gap-2">
-              <Button variant="ghost" size="icon">
-                <Info className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Settings className="h-5 w-5" />
-              </Button>
-            </div> */}
           </div>
         </div>
       </header>
@@ -179,6 +154,7 @@ const Index = () => {
                 onStopFollowLine={on_stop_line_follow}
                 isLineFollow={isLineFollow}
                 onDetectColor={onDetectColor}
+                onStopDetectColor={onStopDetectColor}
               />
 
               <HeadControl
@@ -189,11 +165,15 @@ const Index = () => {
           </div>
           {/* Left Column - Video Feed */}
           <div className="lg:col-span-6 flex-grow">
-            <VideoFeed
-              isCliffDetected={isCliffDetected}
-              isRecording={isRecording}
-              setIsRecording={setIsRecording}
-            />
+            {!isColorDetection ? (
+              <VideoFeed
+                isCliffDetected={isCliffDetected}
+                isRecording={isRecording}
+                setIsRecording={setIsRecording}
+              />
+            ) : (
+              <ColorFeed isColorDetection={isColorDetection} />
+            )}
           </div>
 
           {/* Right Column - Control Panel, Battery Status, Event Log */}
