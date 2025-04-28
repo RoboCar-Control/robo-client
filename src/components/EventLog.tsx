@@ -168,36 +168,36 @@ const EventLog: React.FC<EventProps> = ({
         </Button>
       )}
 
-      <Button
-        variant="outline"
-        className={`w-full bg-red-500 mt-5`}
-        onClick={() => onDetectColor("#ef4444")}
-      >
-        <>
-          <Play className="h-5 w-5 mr-2" />
-          <span>Detect Color</span>
-        </>
-      </Button>
       <div className="mt-10 flex justify-between">
         <Button
           className="mt-2 p-5 flex justify-center bg-robotics-danger w-[70px] h-[70px] rounded-full"
-          onClick={() => onDetectColor("#ef4444")}
+          onClick={() => onDetectColor("#804F50")}
         >
           Red
         </Button>
         <Button
           className="mt-2 p-5 flex justify-center bg-blue-700 w-[70px] h-[70px] rounded-full"
-          onClick={() => onDetectColor("#1d4ed8")}
+          onClick={() => onDetectColor("#53A79E")}
         >
           Blue
         </Button>
         <Button
           className="mt-2 p-5 flex justify-center bg-green-500 w-[70px] h-[70px] rounded-full"
-          onClick={() => onDetectColor("#22c55e")}
+          onClick={() => onDetectColor("#74BB53")}
         >
           Green
         </Button>
       </div>
+      <Button
+        variant="outline"
+        className={`w-full bg-white-500 mt-5`}
+        onClick={() => onDetectColor("#ffffff")}
+      >
+        <>
+          <Play className="h-5 w-5 mr-2" />
+          <span>Detect White</span>
+        </>
+      </Button>
     </div>
   );
 };
