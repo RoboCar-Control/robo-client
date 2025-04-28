@@ -75,6 +75,11 @@ const Index = () => {
     socket.emit("close_color_detect");
   }
 
+  const onStopRecording = () => {
+    setIsRecording(false);
+    socket.emit("stop_stream");
+  }
+
   // Simulate sending commands to the robot
   useEffect(() => {
     if (activeDirection) {
@@ -111,9 +116,6 @@ const Index = () => {
     if (enabled) {
       setIsRecording(enabled);
       socket.emit("video-stream");
-    } else {
-      setIsRecording(!enabled)
-      socket.emit("stop_stream");
     }
 
     toast({
@@ -183,6 +185,7 @@ const Index = () => {
               onToggleAutonomous={handleToggleAutonomous}
               onToggleManual={handleToggleManual}
               onToggleRecording={handleToggleRecording}
+              onStopRecording={onStopRecording}
               onSpeedChange={setRobotSpeed}
               isAutonomous={isAutonomous}
               isRecording={isRecording}

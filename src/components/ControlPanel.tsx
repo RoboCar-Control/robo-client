@@ -21,11 +21,12 @@ const socket = io("http://192.168.137.183:5000");
 type ControlPanelProps = {
   onDirectionChange: (direction: string | null) => void;
   onToggleAutonomous: (enabled: boolean) => void;
-  onToggleManual: (Enabled:boolean) => void;
+  onToggleManual: (Enabled: boolean) => void;
   onToggleRecording: (enabled: boolean) => void;
   onSpeedChange: (speed: number) => void;
   onMoveCar: (direction: string, speed: number) => void;
   onStopCar: () => void;
+  onStopRecording: (enable: boolean) => void
   isAutonomous: boolean;
   isRecording: boolean;
 };
@@ -35,6 +36,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onToggleAutonomous,
   onToggleManual,
   onToggleRecording,
+  onStopRecording,
   onSpeedChange,
   isAutonomous,
   isRecording,
@@ -198,27 +200,29 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
 
         {/* Recording Control */}
         <div className="mt-auto">
-          <Button
-            variant="outline"
-            className={`w-full ${
-              isRecording
-                ? "bg-robotics-danger text-white hover:bg-robotics-danger/80"
-                : ""
-            }`}
-            onClick={() => onToggleRecording(!isRecording)}
-          >
-            {isRecording ? (
+          {isRecording ? (
+            <Button
+              variant="outline"
+              className={`w-full bg-robotics-danger text-white hover:bg-robotics-danger/80`}
+              onClick={() => onStopRecording(false)}
+            >
               <>
                 <Pause className="h-5 w-5 mr-2" />
                 <span>Stop Detection</span>
               </>
-            ) : (
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              onClick={() => onToggleRecording(!isRecording)}
+              className="w-full "
+            >
               <>
                 <Play className="h-5 w-5 mr-2" />
                 <span>Start Object Detection</span>
               </>
-            )}
-          </Button>
+            </Button>
+          )}
         </div>
       </div>
     </div>
