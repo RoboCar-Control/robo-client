@@ -5,16 +5,6 @@ import { io } from "socket.io-client";
 
 const socket = io("http://192.168.137.183:5000");
 
-type Detection = {
-  id: number;
-  label: string;
-  confidence: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
 type ColorFeedProps = {
   isColorDetection: boolean;
 };
