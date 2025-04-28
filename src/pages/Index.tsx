@@ -65,6 +65,7 @@ const Index = () => {
 
   const onDetectColor = (color: string) => {
     console.log(color)
+    setIsRecording(true);
     socket.emit("detect-color", {color: color});
   }
   // Simulate sending commands to the robot
